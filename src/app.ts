@@ -1,4 +1,5 @@
-import express, { type Express, type Router, type Request, type Response } from "express";
+import express from "express";
+import type { Express, Router, Request, Response } from "express";
 
 class App {
   app: Express;
