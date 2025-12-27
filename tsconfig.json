@@ -3,9 +3,9 @@
     "rootDir": "./src",
     "outDir": "./dist",
 
-    "module": "es2022",
-    "target": "es2022",
-    "lib": ["es2022"],
+    "module": "commonjs",
+    "target": "es6",
+    "lib": ["ESNext"],
     "types": ["node", "express"],
 
     // Other Outputs
@@ -13,9 +13,7 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "emitDeclarationOnly": true,
+    "moduleResolution": "node",
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,

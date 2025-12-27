@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de animais de estimação perdidos. A plataforma permite que usuários registrem informações sobre seus pets desaparecidos, incluindo fotos, descrições e locais onde foram vistos pela última vez. Outros usuários podem visualizar esses registros e ajudar na busca compartilhando informações ou reportando avistamentos.",
   "main": "src/server.ts",
-  "type": "module",
   "scripts": {
     "dev": "ts-node src/server.ts",
     "dev:watch": "ts-node-dev --respawn --transpile-only src/server.ts",

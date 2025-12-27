@@ -1,4 +1,4 @@
-import App from "./app.ts";
+import App from "./app";
 import express from "express";
 
 const PORT = 3000;
