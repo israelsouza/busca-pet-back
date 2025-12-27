@@ -27,13 +27,13 @@ class App {
   }
 
   hello() {
-    this.router.get("/", (req: Request, res: Response) => {
+    this.router.get("/", (_: Request, res: Response) => {
       return res.status(200).json({ message: "Hello, friends!!" });
     });
   }
 
   mockUsers() {
-    this.router.get("/users", (req: Request, res: Response) => {
+    this.router.get("/users", (_: Request, res: Response) => {
       return res.status(200).json({
         message: "This people is amazing!!",
         data: {
