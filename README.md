@@ -2,37 +2,32 @@
 
 O buscapet surgiu de um projeto acadêmico, o intuito de refazer esse projeto do zero é puramente experimantal, visando aprimorar minhas habilidades em desenvolvimento web e explorar novas tecnologias e práticas de desenvolvimento.
 
-
 ### Descrição
 
 O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de animais de estimação perdidos. A plataforma permite que usuários registrem informações sobre seus pets desaparecidos, incluindo fotos, descrições e locais onde foram vistos pela última vez. Outros usuários podem visualizar esses registros e ajudar na busca compartilhando informações ou reportando avistamentos.
 
-
 ### Áreas do Projeto
 
-| Área        | Antes    | Agora                            |
-| ---------------------- | -------- | -------------------------------- |
-| Frontend ([nesse repositório](https://github.com/israelsouza/busca-pet-front))            | React | Next.js                     |
-| Backend    | Node.js      | NestJS |
-| Banco de Dados | Oracle      | PostgreSQL                             |
-| Autenticação | JWT     | ???                             |
-| Hospedagem | N/A - N/A     | Vercel - ???                             |
-
+| Área                                                                           | Antes     | Agora        |
+| ------------------------------------------------------------------------------ | --------- | ------------ |
+| Frontend ([nesse repositório](https://github.com/israelsouza/busca-pet-front)) | React     | Next.js      |
+| Backend                                                                        | Node.js   | NestJS       |
+| Banco de Dados                                                                 | Oracle    | PostgreSQL   |
+| Autenticação                                                                   | JWT       | ???          |
+| Hospedagem                                                                     | N/A - N/A | Vercel - ??? |
 
 ### Tecnologias Utilizadas
 
-| Tecnologia/Área        | Antes    | Agora                            |
-| ---------------------- | -------- | -------------------------------- |
-| Gerenciamento de Pacotes | npm | pnpm                     |
-| Qualidade de Código    | N/A      | ESLint + Prettier + editorconfig |
-
+| Tecnologia/Área          | Antes | Agora                            |
+| ------------------------ | ----- | -------------------------------- |
+| Gerenciamento de Pacotes | npm   | pnpm                             |
+| Qualidade de Código      | N/A   | ESLint + Prettier + editorconfig |
 
 ### Estrategia de branching (Git)
 
 - `main`: Branch principal contendo o código estável e pronto para produção.
 - `feature/nome-da-feature`: Branches para desenvolvimento de novas funcionalidades específicas.
 - `hotfix/nome-do-hotfix`: Branches para correções rápidas de bugs na branch `main`.
-
 
 ### Instalação
 
@@ -58,7 +53,6 @@ O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de 
    pnpm run start:dev
    ```
 
-
 ### Estrutura de arquivos e pastas
 
 ```text
@@ -83,7 +77,6 @@ busca-pet-back/
 └── tsconfig.json           # Configuração do TypeScript
 
 ```
-
 
 ### Observações
 
