@@ -39,30 +39,29 @@ O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de 
 1. Clone o repositório:
 2. Utilize a mesma versão do Node.js especificada no arquivo `.nvmrc` com o comando:
 
-   ```
+   ```bash
    nvm use
 
    # caso não tenha a versão instalada, utilize:
-
    nvm install
    ```
 
 3. Instale as dependências do projeto
 
-   ```
+   ```bash
    pnpm install
    ```
 
 4. Inicie o servidor de desenvolvimento:
 
-   ```
+   ```bash
    pnpm run start:dev
    ```
 
 
 ### Estrutura de arquivos e pastas
 
-```
+```text
 busca-pet-back/
 ├── src/
 |   ├── main.ts             # Ponto de entrada da aplicação NestJS
@@ -88,6 +87,6 @@ busca-pet-back/
 
 ### Observações
 
-- Devido a hospedagem gratuita limitada, o backend pode demorar alguns instantes para "acordar" após um período de inatividade.
+- Devido à hospedagem gratuita limitada, o backend pode demorar alguns instantes para "acordar" após um período de inatividade.
 - O projeto está em constante evolução, e novas funcionalidades podem ser adicionadas no futuro.
 - Feedbacks e contribuições são bem-vindos!
