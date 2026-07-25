@@ -1,0 +1,52 @@
+service: backend-buscapet
+frameworkVersion: '4'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  region: ${opt:region, env:AWS_REGION, 'us-east-1'}
+  stage: ${opt:stage, env:STAGE, 'dev'}
+  memorySize: 512 # mb ; min confortavel NestJS+Prisma ; cold start 3-5s
+  timeout: 30 # teto do API Gateway HTTP API v2 — não aumentar
+  logRetentionInDays: 7 # menor retenção = menos custo CloudWatch
+  architecture: arm64 # Graviton: -20% custo, +performance
+  environment:
+    STAGE: ${self:provider.stage}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps'
+    LOG_LEVEL: ${env:LOG_LEVEL, 'info'}
+    SUPABASE_URL: ${env:SUPABASE_URL, ''}
+    SUPABASE_ANON_KEY: ${env:SUPABASE_ANON_KEY, ''}
+
+    # Injeção via .env local ou Fallback para SSM Parameter Store na AWS
+    DATABASE_URL: ${env:DATABASE_URL, ssm:/buscapet/${self:provider.stage}/database/url}
+    JWT_SECRET: ${env:JWT_SECRET, ssm:/buscapet/${self:provider.stage}/auth/jwt-secret}
+    SUPABASE_SERVICE_ROLE_KEY: ${env:SUPABASE_SERVICE_ROLE_KEY, ssm:/buscapet/${self:provider.stage}/supabase/service-role-key}
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+
+functions:
+  api:
+    handler: dist/lambda.handler
+    description: 'NestJS HTTP API Handler'
+    events:
+      - httpApi:
+          path: '/{proxy+}'
+          method: '*'
+
+package:
+  individually: false
+  patterns:
+    - 'dist/**'
+    - 'prisma/schema.prisma'
+    - 'prisma/migrations/**' # necessário p/ `prisma migrate deploy` em runtime
+    - 'node_modules/**' # engines e client gerado
+    - '!src/**'
+    - '!test/**'
+    - '!coverage/**'
+    - '!.github/**'
