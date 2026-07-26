@@ -4,6 +4,21 @@ frameworkVersion: '4'
 plugins:
   - serverless-offline
 
+build:
+  esbuild:
+    bundle: true
+    minify: false
+    target: node24
+    platform: node
+    tsconfig: ./tsconfig.json
+    external:
+      - '@nestjs/websockets/socket-module'
+      - '@nestjs/microservices/microservices-module'
+      - '@nestjs/microservices'
+      - 'class-validator'
+      - 'class-transformer'
+      - '@nestjs/swagger'
+
 provider:
   name: aws
   runtime: nodejs24.x
@@ -32,7 +47,7 @@ custom:
 
 functions:
   api:
-    handler: dist/lambda.handler
+    handler: src/lambda.handler
     description: 'NestJS HTTP API Handler'
     events:
       - httpApi:
@@ -42,10 +57,9 @@ functions:
 package:
   individually: false
   patterns:
-    - 'dist/**'
     - 'prisma/schema.prisma'
-    - 'prisma/migrations/**' # necessário p/ `prisma migrate deploy` em runtime
-    - 'node_modules/**' # engines e client gerado
+    - 'prisma/migrations/**'
+    - '!.env*'
     - '!src/**'
     - '!test/**'
     - '!coverage/**'
