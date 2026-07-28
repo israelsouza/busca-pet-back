@@ -13,7 +13,6 @@ O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de 
 | Frontend ([nesse repositório](https://github.com/israelsouza/busca-pet-front)) | React     | Next.js                             |
 | Backend                                                                        | Node.js   | NestJS                              |
 | Banco de Dados                                                                 | Oracle    | PostgreSQL (supabase)               |
-| Autenticação                                                                   | JWT       | ???                                 |
 | Hospedagem                                                                     | N/A - N/A | Vercel - (AWS Lambda + API Gateway) |
 
 ### Tecnologias Utilizadas
@@ -33,6 +32,8 @@ O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de 
 - `hotfix/nome-do-hotfix`: Branches para correções rápidas de bugs na branch `main`.
 
 ### Estrutura de arquivos e pastas
+
+Para configurar o ambiente local, consulte o [Guia de Contribuição](CONTRIBUTING.md).
 
 ```text
 busca-pet-back/

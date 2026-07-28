@@ -36,10 +36,11 @@ provider:
     SUPABASE_URL: ${env:SUPABASE_URL, ''}
     SUPABASE_ANON_KEY: ${env:SUPABASE_ANON_KEY, ''}
 
-    # Injeção via .env local ou Fallback para SSM Parameter Store na AWS
-    DATABASE_URL: ${env:DATABASE_URL, ssm:/buscapet/${self:provider.stage}/database/url}
-    JWT_SECRET: ${env:JWT_SECRET, ssm:/buscapet/${self:provider.stage}/auth/jwt-secret}
-    SUPABASE_SERVICE_ROLE_KEY: ${env:SUPABASE_SERVICE_ROLE_KEY, ssm:/buscapet/${self:provider.stage}/supabase/service-role-key}
+    # Prioridade para SSM Parameter Store na AWS com fallback para .env local
+    DATABASE_URL: ${ssm:/buscapet/${self:provider.stage}/database/url, env:DATABASE_URL}
+    DIRECT_DATABASE_URL: ${ssm:/buscapet/${self:provider.stage}/database/direct-url, env:DIRECT_DATABASE_URL, ''}
+    JWT_SECRET: ${ssm:/buscapet/${self:provider.stage}/auth/jwt-secret, env:JWT_SECRET}
+    SUPABASE_SERVICE_ROLE_KEY: ${ssm:/buscapet/${self:provider.stage}/supabase/service-role-key, env:SUPABASE_SERVICE_ROLE_KEY}
 
 custom:
   serverless-offline:

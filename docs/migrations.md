@@ -25,16 +25,19 @@ O fluxo de desenvolvimento é dividido em duas etapas: criar a migração no amb
 
 ### Etapa B: Aplicar as Migrações no Supabase Hospedado (Nuvem)
 
-Para aplicar as migrações salvas na pasta `prisma/migrations/` no banco de dados remoto do Supabase (Dev, Staging ou Prod):
+Para aplicar as migrações salvas na pasta `prisma/migrations/` no banco de dados remoto do Supabase (Staging ou Prod):
 
-1. Obtenha a URL de conexão do seu projeto Supabase na nuvem (preferencialmente via **Transaction Pooler** na porta `6543`).
-2. Execute o comando `prisma migrate deploy` injetando temporariamente a URL do banco remoto:
+1. Obtenha a URL de **Direct Connection** (porta `5432`) do seu projeto Supabase na nuvem.
+
+> ⚠️ **Atenção:** Para `prisma migrate deploy`, utilize a **Direct Connection** (porta `5432`) através da variável `DIRECT_DATABASE_URL`. **Não** utilize o Transaction Pooler (porta `6543`) — o PgBouncer/Supavisor em modo transaction não suporta os comandos de sessão que o Prisma Migrate executa, o que pode fazer a migração travar ou falhar.
+
+2. Execute o comando `prisma migrate deploy` injetando temporariamente as variáveis de conexão com o banco remoto:
 
    ```bash
-   DATABASE_URL="postgresql://postgres.xxxx:senha@aws-0-sa-east-1.pooler.supabase.com:6543/postgres" pnpm prisma migrate deploy
+   DIRECT_DATABASE_URL="postgresql://postgres:senha@db.xxxx.supabase.co:5432/postgres" DATABASE_URL="postgresql://postgres.xxxx:senha@aws-0-sa-east-1.pooler.supabase.com:6543/postgres" pnpm prisma migrate deploy
    ```
 
-> **Dica Linux/Bash:** Injetar `DATABASE_URL="..."` antes do comando aplica a variável **apenas para essa execução específica**, mantendo o seu arquivo `.env` local intacto.
+> **Dica Linux/Bash:** Injetar as variáveis antes do comando as aplica **apenas para essa execução específica**, mantendo o seu arquivo `.env` local intacto.
 
 ---
 

@@ -13,6 +13,7 @@ Este documento descreve as variáveis de ambiente utilizadas pelo backend do Bus
 | `SUPABASE_ANON_KEY`         | env literal                                                             | Chave pública (anon role)                                                      |
 | `SUPABASE_SERVICE_ROLE_KEY` | **SSM** (`/buscapet/<stage>/supabase/service-role-key`, `SecureString`) | Chave com bypass de RLS — só backend                                           |
 | `DATABASE_URL`              | **SSM** (`/buscapet/<stage>/database/url`, `SecureString`)              | Connection string do Supabase Postgres via **transaction pooler** (porta 6543) |
+| `DIRECT_DATABASE_URL`       | **SSM** (`/buscapet/<stage>/database/direct-url`, `SecureString`)       | Connection string do Supabase Postgres via **Direct Connection** (porta 5432)  |
 | `JWT_SECRET`                | **SSM** (`/buscapet/<stage>/auth/jwt-secret`, `SecureString`)           | Segredo de assinatura JWT                                                      |
 
-> **Sintaxe de Fallback no `serverless.yml`:** As variáveis sensíveis usam o formato `${env:VAR, ssm:/buscapet/${self:provider.stage}/VAR}`. Isso garante que no desenvolvimento local o valor seja lido diretamente do arquivo `.env` (sem necessidade de consultar a AWS), enquanto no deploy para a AWS o valor é injetado automaticamente a partir do SSM Parameter Store do stage correspondente.
+> **Sintaxe de Resolução no `serverless.yml`:** As variáveis sensíveis usam a sintaxe `${ssm:/buscapet/${self:provider.stage}/VAR, env:VAR}`. Isso garante que, em deploys remotos para a AWS, o SSM Parameter Store seja autoritativo (evitando a contaminação por variáveis de ambiente locais do shell), com fallback para o `.env` local durante execuções offline.
