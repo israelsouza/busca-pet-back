@@ -1,0 +1,10 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")             // Porta 6543 (Pooler - execução da API em runtime)
+  directUrl = env("DIRECT_DATABASE_URL")      // Porta 5432 (Direta - aplicação de migrações) 
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+}

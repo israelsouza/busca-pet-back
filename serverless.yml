@@ -1,0 +1,67 @@
+service: backend-buscapet
+frameworkVersion: '4'
+
+plugins:
+  - serverless-offline
+
+build:
+  esbuild:
+    bundle: true
+    minify: false
+    target: node24
+    platform: node
+    tsconfig: ./tsconfig.json
+    external:
+      - '@nestjs/websockets/socket-module'
+      - '@nestjs/microservices/microservices-module'
+      - '@nestjs/microservices'
+      - 'class-validator'
+      - 'class-transformer'
+      - '@nestjs/swagger'
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  region: ${opt:region, env:AWS_REGION, 'us-east-1'}
+  stage: ${opt:stage, env:STAGE, 'dev'}
+  memorySize: 512 # mb ; min confortavel NestJS+Prisma ; cold start 3-5s
+  timeout: 30 # teto do API Gateway HTTP API v2 — não aumentar
+  logRetentionInDays: 7 # menor retenção = menos custo CloudWatch
+  architecture: arm64 # Graviton: -20% custo, +performance
+  environment:
+    STAGE: ${self:provider.stage}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps'
+    LOG_LEVEL: ${env:LOG_LEVEL, 'info'}
+    SUPABASE_URL: ${env:SUPABASE_URL, ''}
+    SUPABASE_ANON_KEY: ${env:SUPABASE_ANON_KEY, ''}
+
+    # Prioridade para SSM Parameter Store na AWS com fallback para .env local
+    DATABASE_URL: ${ssm:/buscapet/${self:provider.stage}/database/url, env:DATABASE_URL}
+    DIRECT_DATABASE_URL: ${ssm:/buscapet/${self:provider.stage}/database/direct-url, env:DIRECT_DATABASE_URL, ''}
+    JWT_SECRET: ${ssm:/buscapet/${self:provider.stage}/auth/jwt-secret, env:JWT_SECRET}
+    SUPABASE_SERVICE_ROLE_KEY: ${ssm:/buscapet/${self:provider.stage}/supabase/service-role-key, env:SUPABASE_SERVICE_ROLE_KEY}
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+
+functions:
+  api:
+    handler: src/lambda.handler
+    description: 'NestJS HTTP API Handler'
+    events:
+      - httpApi:
+          path: '/{proxy+}'
+          method: '*'
+
+package:
+  individually: false
+  patterns:
+    - 'prisma/schema.prisma'
+    - 'prisma/migrations/**'
+    - '!.env*'
+    - '!src/**'
+    - '!test/**'
+    - '!coverage/**'
+    - '!.github/**'
