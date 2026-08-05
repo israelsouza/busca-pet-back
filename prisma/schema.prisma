@@ -8,3 +8,73 @@ generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
 }
+
+enum AuthType {
+  LOCAL
+  OAUTH
+
+  @@map("AUTH_TYPES")
+}
+
+model Person {
+  id   String @id @default(uuid()) @db.Uuid @map("id")
+  name String @map("name")
+  user User?
+
+  @@map("PEOPLE")
+}
+
+model User {
+  id       String @id @default(uuid()) @db.Uuid @map("id")
+  personId String @unique @db.Uuid @map("person_id")
+  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  email    String  @unique @map("email")
+  nickname String  @map("nickname")
+  isBan    Boolean @default(false) @map("is_ban")
+  photo    String? @map("photo")
+
+  metadata    Json         @map("metadata")
+  authMethods AuthMethod[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  lastLogin DateTime? @map("last_login")
+
+  @@map("USERS")
+}
+
+model AuthMethod {
+  id     String   @id @default(uuid()) @db.Uuid @map("id")
+  userId String   @db.Uuid @map("user_id")
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type   AuthType @map("type")
+
+  localAuth LocalAuth?
+  oauthAuth OAuthAuth?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("AUTH_METHODS")
+}
+
+model LocalAuth {
+  id           String     @id @default(uuid()) @db.Uuid @map("id")
+  authMethodId String     @unique @db.Uuid @map("auth_method_id")
+  authMethod   AuthMethod @relation(fields: [authMethodId], references: [id], onDelete: Cascade)
+  password     String     @map("password")
+
+  @@map("LOCAL_AUTHS")
+}
+
+model OAuthAuth {
+  id             String     @id @default(uuid()) @db.Uuid @map("id")
+  authMethodId   String     @unique @db.Uuid @map("auth_method_id")
+  authMethod     AuthMethod @relation(fields: [authMethodId], references: [id], onDelete: Cascade)
+  provider       String     @map("provider")
+  providerUserId String     @map("provider_user_id")
+
+  @@unique([provider, providerUserId])
+  @@map("OAUTH_AUTHS")
+}
