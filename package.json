@@ -29,9 +29,11 @@
   "dependencies": {
     "@nestjs/common": "11.1.19",
     "@nestjs/core": "11.1.19",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "11.1.19",
     "@prisma/client": "5.22.0",
     "@vendia/serverless-express": "4.12.6",
+    "argon2": "0.44.0",
     "express": "5.2.1",
     "nestjs-zod": "4.3.1",
     "prisma": "5.22.0",
