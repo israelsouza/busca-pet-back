@@ -14,6 +14,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@users/*": ["src/users/*"],
+      "@authorization/*": ["src/authorization/*"],
+      "@storage/*": ["src/storage/*"],
+      "@/*": ["src/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
