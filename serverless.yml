@@ -60,6 +60,7 @@ package:
   patterns:
     - 'prisma/schema.prisma'
     - 'prisma/migrations/**'
+    - 'prisma/*.so.node'
     - '!.env*'
     - '!src/**'
     - '!test/**'
