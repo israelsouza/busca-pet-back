@@ -40,7 +40,7 @@ describe('POST /api/v1/users/create/local (E2E)', () => {
 
     app = moduleFixture.createNestApplication();
     setupApp(app);
-    await app.init();
+    await app.listen(3000);
 
     prisma = moduleFixture.get<PrismaService>(PrismaService);
   });
