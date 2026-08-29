@@ -50,6 +50,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas na su
    ```bash
    pnpm supabase start
    ```
+   O painel estará acessível em `http://127.0.0.1:54323`
 
 6. **Inicie o servidor de desenvolvimento:**
    ```bash
