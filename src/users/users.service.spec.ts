@@ -99,7 +99,7 @@ describe('UsersService', () => {
             nickname: dto.nickname,
             person: dto.personName,
             type: 'LOCAL',
-            password: 'hashed_password_mock',
+            passwordHash: 'hashed_password_mock',
             metadata: {
               authorization: { roles: ['user:common'] },
             },

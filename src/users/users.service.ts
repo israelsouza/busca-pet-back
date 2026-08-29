@@ -46,7 +46,7 @@ export class UsersService {
         authorization: roles,
       },
       type: 'LOCAL',
-      password: hashedPassword,
+      passwordHash: hashedPassword,
     };
 
     const entity = await this.userStorage.createLocalUser(newUserEntity);

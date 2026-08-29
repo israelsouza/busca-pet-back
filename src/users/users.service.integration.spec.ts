@@ -69,8 +69,8 @@ describe('UsersService (integração)', () => {
 
       const primeiraChamada = mockUserStorage.createLocalUser.mock.calls[0] as unknown[];
       const chamadaStorage = primeiraChamada[0] as newUser;
-      expect(chamadaStorage.password).not.toBe(senha);
-      expect(chamadaStorage.password).toContain('hashed::');
+      expect(chamadaStorage.passwordHash).not.toBe(senha);
+      expect(chamadaStorage.passwordHash).toContain('hashed::');
     });
 
     it('deve montar o newUserEntity com o formato correto (metadata.authorization)', async () => {

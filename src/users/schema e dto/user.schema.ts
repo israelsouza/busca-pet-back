@@ -22,6 +22,6 @@ export const newLocalUserEntity = z.object({
   nickname,
   metadata,
   type: z.literal('LOCAL'),
-  password: password,
+  passwordHash: password,
 });
 export type newUserType = z.infer<typeof newLocalUserEntity>;

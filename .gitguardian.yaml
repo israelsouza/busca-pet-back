@@ -1,6 +1,11 @@
 version: 2
 secret:
-  ignored-paths:
-    - '**/*.spec.ts'
-    - '**/*.test.ts'
-    - '**/test/**'
+  ignored-matches:
+    # These are dummy/fixture values used exclusively in test files.
+    # They are not real credentials and do not represent actual secrets.
+    - name: 'Test fixture password - senhaForte123'
+      match: 'senhaForte123'
+    - name: 'Test fixture password - minhasenha123'
+      match: 'minhasenha123'
+    - name: 'Test fixture password - senha123'
+      match: 'senha123'

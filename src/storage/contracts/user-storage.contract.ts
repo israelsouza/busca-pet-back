@@ -19,7 +19,7 @@ export interface newUser {
   nickname: string;
   metadata: Metadata;
   type: 'LOCAL';
-  password: string;
+  passwordHash: string;
 }
 
 export interface CreatedUserResponse {
