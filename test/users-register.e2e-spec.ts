@@ -1,11 +1,11 @@
 /**
  * Fluxo de cadastro de usuário local
  *
- * Requisitos: 
+ * Requisitos:
  *   Supabase local deve estar rodando (pnpm supabase start),
  *   as migrações devem estar aplicadas.
  *
- * Limpeza: 
+ * Limpeza:
  *   Ao final de todos os testes, os usuários criados são removidos do banco.
  */
 

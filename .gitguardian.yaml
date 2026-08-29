@@ -1,6 +1,6 @@
 version: 2
-    secret:
-      ignored-paths:
-        - "**/*.spec.ts"
-        - "**/*.test.ts"
-        - "**/test/**"
+secret:
+  ignored-paths:
+    - '**/*.spec.ts'
+    - '**/*.test.ts'
+    - '**/test/**'
