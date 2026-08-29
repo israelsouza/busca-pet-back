@@ -9,5 +9,4 @@ export class AuthorizationService {
       roles: ['user:common'],
     };
   }
-
 }
