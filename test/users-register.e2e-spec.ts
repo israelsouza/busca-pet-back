@@ -24,7 +24,7 @@ const makeValidBody = (overrides: Record<string, unknown> = {}) => ({
   email: `e2e-${Date.now()}-${Math.random().toString(36).slice(2)}@buscapet.test`,
   nickname: `e2e_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
   password: 'senhaForte123',
-  secund_password: 'senhaForte123',
+  confirmation_password: 'senhaForte123',
   ...overrides,
 });
 
@@ -97,7 +97,7 @@ describe('POST /api/v1/users/create/local (E2E)', () => {
     });
 
     it('400 — deve rejeitar body com senha muito curta (< 8 chars)', async () => {
-      const body = makeValidBody({ password: 'curta', secund_password: 'curta' });
+      const body = makeValidBody({ password: 'curta', confirmation_password: 'curta' });
 
       await request(app.getHttpServer()).post(BASE_URL).send(body).expect(400);
     });
@@ -112,7 +112,7 @@ describe('POST /api/v1/users/create/local (E2E)', () => {
 
   describe('❌ Regras de negócio', () => {
     it('400 — deve retornar erro se as senhas não coincidem', async () => {
-      const body = makeValidBody({ secund_password: 'senha_diferente_456' });
+      const body = makeValidBody({ confirmation_password: 'senha_diferente_456' });
 
       await request(app.getHttpServer()).post(BASE_URL).send(body).expect(400);
     });

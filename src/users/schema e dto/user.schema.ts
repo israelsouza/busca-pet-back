@@ -11,7 +11,7 @@ export const localUserSchema = z.object({
   personName,
   email,
   password,
-  secund_password: password,
+  confirmation_password: password,
   nickname,
 });
 export type localUserType = z.infer<typeof localUserSchema>;

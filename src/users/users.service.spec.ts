@@ -19,7 +19,7 @@ const makeLocalUserDTO = (overrides: Partial<LocalUserDTO> = {}): LocalUserDTO =
   email: 'joao@example.com',
   nickname: 'joaosilva',
   password: 'senha123',
-  secund_password: 'senha123',
+  confirmation_password: 'senha123',
   ...overrides,
 });
 
@@ -161,21 +161,21 @@ describe('UsersService', () => {
 
     describe('❌ Senhas não coincidem', () => {
       it('deve lançar BadRequestException se as senhas são diferentes', async () => {
-        const dto = makeLocalUserDTO({ secund_password: 'outra_senha_123' });
+        const dto = makeLocalUserDTO({ confirmation_password: 'outra_senha_123' });
         mockUserStorage.checkEmailAndNickname.mockResolvedValue(null);
 
         await expect(service.registerLocalUser(dto)).rejects.toThrow(BadRequestException);
       });
 
       it('deve lançar BadRequestException com a mensagem correta', async () => {
-        const dto = makeLocalUserDTO({ secund_password: 'outra_senha_123' });
+        const dto = makeLocalUserDTO({ confirmation_password: 'outra_senha_123' });
         mockUserStorage.checkEmailAndNickname.mockResolvedValue(null);
 
         await expect(service.registerLocalUser(dto)).rejects.toThrow('Parece que as senhas digitadas não coincidem, tente novamente.');
       });
 
       it('não deve chamar createLocalUser quando as senhas não coincidem', async () => {
-        const dto = makeLocalUserDTO({ secund_password: 'outra_senha_123' });
+        const dto = makeLocalUserDTO({ confirmation_password: 'outra_senha_123' });
         mockUserStorage.checkEmailAndNickname.mockResolvedValue(null);
 
         await expect(service.registerLocalUser(dto)).rejects.toThrow(BadRequestException);

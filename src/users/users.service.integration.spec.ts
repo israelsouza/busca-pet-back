@@ -26,7 +26,7 @@ const makeLocalUserDTO = (overrides: Partial<LocalUserDTO> = {}): LocalUserDTO =
   email: 'ana@example.com',
   nickname: 'anasouza',
   password: 'minhasenha123',
-  secund_password: 'minhasenha123',
+  confirmation_password: 'minhasenha123',
   ...overrides,
 });
 
@@ -124,7 +124,7 @@ describe('UsersService (integração)', () => {
     });
 
     it('deve parar o fluxo na validação de senhas antes de chamar o serviço de auth', async () => {
-      const dto = makeLocalUserDTO({ secund_password: 'senha_diferente' });
+      const dto = makeLocalUserDTO({ confirmation_password: 'senha_diferente' });
       const httpSpy = jest.spyOn(httpService, 'post');
       mockUserStorage.checkEmailAndNickname.mockResolvedValue(null);
 

@@ -9,7 +9,7 @@ const makeLocalUserDTO = (overrides: Partial<LocalUserDTO> = {}): LocalUserDTO =
   email: 'joao@example.com',
   nickname: 'joaosilva',
   password: 'senha123',
-  secund_password: 'senha123',
+  confirmation_password: 'senha123',
   ...overrides,
 });
 
@@ -65,7 +65,7 @@ describe('UsersController', () => {
     });
 
     it('deve propagar BadRequestException lançada pelo service', async () => {
-      const dto = makeLocalUserDTO({ secund_password: 'senha_errada' });
+      const dto = makeLocalUserDTO({ confirmation_password: 'senha_errada' });
       mockUsersService.registerLocalUser.mockRejectedValue(
         new BadRequestException('Parece que as senhas digitadas não coincidem, tente novamente.'),
       );

@@ -25,7 +25,7 @@ export class UsersService {
       throw new ConflictException(result.message);
     }
 
-    this.validateTextPasswords(data.password, data.secund_password);
+    this.validateTextPasswords(data.password, data.confirmation_password);
 
     const hashedPassword: string = await this.generatePasswordHash(data.password);
 
