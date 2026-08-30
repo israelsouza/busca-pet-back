@@ -5,14 +5,7 @@ import argon2 from 'argon2';
 import { UserStorage } from '@storage/contracts/user-storage.contract';
 import { firstValueFrom } from 'rxjs';
 
-const base = 'http://localhost:3000/api';
-
-// fazer arquivo proprio e em montagem, definir a montagem por ambiente (dev, stg, prod)
-const environment = {
-  services: {
-    authorization: base + '/v1/authorization',
-  },
-};
+import { environment } from '@/app/environments/environment.loader';
 
 export interface InitialPermissions {
   roles: string[];
