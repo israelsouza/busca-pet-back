@@ -8,20 +8,22 @@ O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de 
 
 ### Áreas do Projeto
 
-| Área                                                                           | Antes     | Agora        |
-| ------------------------------------------------------------------------------ | --------- | ------------ |
-| Frontend ([nesse repositório](https://github.com/israelsouza/busca-pet-front)) | React     | Next.js      |
-| Backend                                                                        | Node.js   | NestJS       |
-| Banco de Dados                                                                 | Oracle    | PostgreSQL   |
-| Autenticação                                                                   | JWT       | ???          |
-| Hospedagem                                                                     | N/A - N/A | Vercel - ??? |
+| Área                                                                           | Antes     | Agora                               |
+| ------------------------------------------------------------------------------ | --------- | ----------------------------------- |
+| Frontend ([nesse repositório](https://github.com/israelsouza/busca-pet-front)) | React     | Next.js                             |
+| Backend                                                                        | Node.js   | NestJS                              |
+| Banco de Dados                                                                 | Oracle    | PostgreSQL (supabase)               |
+| Hospedagem                                                                     | N/A - N/A | Vercel - (AWS Lambda + API Gateway) |
 
 ### Tecnologias Utilizadas
 
-| Tecnologia/Área          | Antes | Agora                            |
-| ------------------------ | ----- | -------------------------------- |
-| Gerenciamento de Pacotes | npm   | pnpm                             |
-| Qualidade de Código      | N/A   | ESLint + Prettier + editorconfig |
+| Tecnologia/Área          | Antes | Agora                             |
+| ------------------------ | ----- | --------------------------------- |
+| Gerenciamento de Pacotes | npm   | pnpm                              |
+| Qualidade de Código      | N/A   | ESLint + Prettier + editorconfig  |
+| ORM                      | N/A   | Prisma 5                          |
+| Validação em runtime     | N/A   | Zod + nestjs-zod                  |
+| Build                    | N/A   | Serverless Framework v4 + esbuild |
 
 ### Estrategia de branching (Git)
 
@@ -29,53 +31,44 @@ O Busca Pet é uma aplicação web desenvolvida para ajudar na localização de 
 - `feature/nome-da-feature`: Branches para desenvolvimento de novas funcionalidades específicas.
 - `hotfix/nome-do-hotfix`: Branches para correções rápidas de bugs na branch `main`.
 
-### Instalação
-
-1. Clone o repositório:
-2. Utilize a mesma versão do Node.js especificada no arquivo `.nvmrc` com o comando:
-
-   ```bash
-   nvm use
-
-   # caso não tenha a versão instalada, utilize:
-   nvm install
-   ```
-
-3. Instale as dependências do projeto
-
-   ```bash
-   pnpm install
-   ```
-
-4. Inicie o servidor de desenvolvimento:
-
-   ```bash
-   pnpm run start:dev
-   ```
-
 ### Estrutura de arquivos e pastas
+
+Para configurar o ambiente local, consulte o [Guia de Contribuição](CONTRIBUTING.md).
 
 ```text
 busca-pet-back/
-├── src/
-|   ├── main.ts             # Ponto de entrada da aplicação NestJS
-|   ├── app.module.ts       # Módulo principal da aplicação
-|   ├── app.controller.ts    # Controlador principal
-|   └── app.service.ts       # Serviço principal
-├── test/                   # Testes automatizados (e2e)
-├── .editorconfig       # Configuração do EditorConfig
-├── .gitignore
-├── .nvmrc                  # Versão do Node.js utilizada
-├── .prettierignore     # Arquivos e pastas ignorados pelo Prettier
-├── .prettierrc         # Configuração do Prettier
-├── eslint.config.mjs       # Configuração do ESLint
-├── nest-cli.json           # Configuração do NestJS CLI
-├── package.json            # Dependências e scripts do Node.js
-├── pnpm-lock.yaml          # Versões exatas das dependências
-├── README.md               # Documentação do projeto
-├── tsconfig.build.json     # Configuração do TypeScript para build
-└── tsconfig.json           # Configuração do TypeScript
-
+├── docs/                   # Documentação detalhada do projeto
+│   ├── environment_vars.md # Tabela de variáveis de ambiente e segredos SSM
+│   └── migrations.md       # Guia de migrações com Prisma e Supabase
+├── prisma/                 # Modelagem e migrações do banco de dados
+│   └── schema.prisma       # Schema do PostgreSQL
+├── src/                    # Código fonte da aplicação NestJS
+│   ├── app/                # Setup de bootstrap (local e Lambda)
+│   ├── hello-world/        # Módulo de exemplo/health check
+│   ├── app.module.ts       # Módulo raiz do NestJS
+│   ├── lambda.ts           # Entrypoint da função AWS Lambda (Serverless)
+│   └── main.ts             # Entrypoint para desenvolvimento local
+├── supabase/               # Configurações do Supabase CLI local
+│   └── config.toml
+├── test/                   # Testes automatizados (e2e e unidade)
+├── .editorconfig           # Configurações de formatação do editor
+├── .env.example            # Exemplo de variáveis de ambiente
+├── .gitignore              # Arquivos e pastas ignorados pelo Git
+├── .nvmrc                  # Versão do Node.js (v24)
+├── .prettierignore         # Arquivos ignorados pelo Prettier
+├── .prettierrc             # Configurações de formatação do Prettier
+├── commitlint.config.js    # Configurações do Commitlint (Conventional Commits)
+├── CONTRIBUTING.md         # Guia de contribuição Open Source
+├── eslint.config.mjs       # Configurações de linting (ESLint v9)
+├── LICENSE                 # Licença do projeto (MIT)
+├── nest-cli.json           # Configurações do NestJS CLI
+├── package.json            # Scripts e dependências do projeto
+├── pnpm-lock.yaml          # Lockfile de dependências exatas (pnpm)
+├── pnpm-workspace.yaml     # Configurações de workspace do pnpm
+├── README.md               # Documentação principal do repositório
+├── serverless.yml          # Configurações de infraestrutura Serverless (AWS Lambda)
+├── tsconfig.build.json     # Configuração TypeScript para build de produção
+└── tsconfig.json           # Configuração base do TypeScript
 ```
 
 ### Observações
