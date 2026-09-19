@@ -1,3 +1,4 @@
+import 'tsconfig-paths/register';
 import { bootstrapLocal } from './app/bootstrap';
 
 bootstrapLocal().catch((error) => {

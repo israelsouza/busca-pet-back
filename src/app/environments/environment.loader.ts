@@ -1,7 +1,7 @@
 import { type Environment } from './environment.interface';
 
 const loadEnvironment = (): Environment => {
-  const env = process.env.NODE_ENV ?? 'dev';
+  const env = process.env.STAGE ?? 'dev';
 
   const loaders: Record<string, () => Environment> = {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -9,9 +9,9 @@ const loadEnvironment = (): Environment => {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     test: () => (require('./environment.dev') as { environment: Environment }).environment,
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    homolog: () => (require('./environment.homolog') as { environment: Environment }).environment,
+    stg: () => (require('./environment.stg') as { environment: Environment }).environment,
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    prod: () => (require('./environment.prod') as { environment: Environment }).environment,
+    prd: () => (require('./environment.prd') as { environment: Environment }).environment,
   };
 
   const loader = loaders[env];

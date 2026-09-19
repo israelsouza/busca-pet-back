@@ -11,6 +11,11 @@ build:
     target: node24
     platform: node
     tsconfig: ./tsconfig.json
+    alias:
+      '@users': './src/users'
+      '@authorization': './src/authorization'
+      '@storage': './src/storage'
+      '@': './src'
     external:
       - '@node-rs/argon2'
       - '@node-rs/argon2-linux-arm64-gnu'
@@ -43,6 +48,8 @@ provider:
     DIRECT_DATABASE_URL: ${ssm:/buscapet/${self:provider.stage}/database/direct-url, env:DIRECT_DATABASE_URL, ''}
     JWT_SECRET: ${ssm:/buscapet/${self:provider.stage}/auth/jwt-secret, env:JWT_SECRET}
     SUPABASE_SERVICE_ROLE_KEY: ${ssm:/buscapet/${self:provider.stage}/supabase/service-role-key, env:SUPABASE_SERVICE_ROLE_KEY}
+
+    API_BASE_URL: ${ssm:/buscapet/${self:provider.stage}/api-base-url, env:API_BASE_URL, ''}
 
 custom:
   serverless-offline:
