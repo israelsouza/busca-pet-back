@@ -1,7 +1,7 @@
-import { BadRequestException, ConflictException, Injectable, ServiceUnavailableException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { LocalUserDTO, NewLocalUserDTO } from './schema e dto/user.dto';
 import { HttpService } from '@nestjs/axios';
-import argon2 from 'argon2';
+import { hash } from '@node-rs/argon2';
 import { UserStorage } from '@storage/contracts/user-storage.contract';
 import { firstValueFrom } from 'rxjs';
 
@@ -14,7 +14,9 @@ export interface InitialPermissions {
 @Injectable()
 export class UsersService {
   constructor(
+    @Inject(UserStorage)
     private readonly userStorage: UserStorage,
+    @Inject(HttpService)
     private http: HttpService,
   ) {}
 
@@ -49,7 +51,11 @@ export class UsersService {
 
   private async createInitialPermissions(): Promise<InitialPermissions> {
     try {
-      const { data } = await firstValueFrom(this.http.post<InitialPermissions>(`${environment.services.authorization}/initialPermissions`));
+      const { data } = await firstValueFrom(
+        this.http.post<InitialPermissions>(`${environment.services.authorization}/initialPermissions`, null, {
+          timeout: 5000,
+        }),
+      );
 
       return data;
     } catch {
@@ -58,7 +64,7 @@ export class UsersService {
   }
 
   private async generatePasswordHash(password: string): Promise<string> {
-    return await argon2.hash(password);
+    return await hash(password);
   }
 
   private validateTextPasswords(passOne: string, passTwo: string): void {

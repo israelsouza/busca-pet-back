@@ -7,11 +7,8 @@ import { UsersService } from './users.service';
 import { UserStorage } from '@storage/contracts/user-storage.contract';
 import { LocalUserDTO } from './schema e dto/user.dto';
 
-// argon2 não tem default export: o service usa "import argon2 from 'argon2'"
-// com esModuleInterop, isso mapeia para o módulo inteiro. Mockamos o hash diretamente.
-jest.mock('argon2', () => ({
+jest.mock('@node-rs/argon2', () => ({
   hash: jest.fn().mockResolvedValue('hashed_password_mock'),
-  argon2id: 2,
 }));
 
 const makeLocalUserDTO = (overrides: Partial<LocalUserDTO> = {}): LocalUserDTO => ({
@@ -116,7 +113,11 @@ describe('UsersService', () => {
 
         await service.registerLocalUser(dto);
 
-        expect(mockHttpService.post).toHaveBeenCalledWith(expect.stringContaining('/v1/authorization/initialPermissions'));
+        expect(mockHttpService.post).toHaveBeenCalledWith(
+          expect.stringContaining('/v1/authorization/initialPermissions'),
+          null,
+          expect.objectContaining({ timeout: 5000 }),
+        );
       });
     });
 
@@ -204,6 +205,18 @@ describe('UsersService', () => {
         const dto = makeLocalUserDTO();
         mockUserStorage.checkEmailAndNickname.mockResolvedValue(null);
         mockHttpService.post.mockReturnValue(throwError(() => new Error('Connection refused')));
+
+        await expect(service.registerLocalUser(dto)).rejects.toThrow(ServiceUnavailableException);
+        expect(mockUserStorage.createLocalUser).not.toHaveBeenCalled();
+      });
+
+      it('deve lançar ServiceUnavailableException quando o serviço de autorização não responde (timeout)', async () => {
+        const dto = makeLocalUserDTO();
+        mockUserStorage.checkEmailAndNickname.mockResolvedValue(null);
+
+        const timeoutError = new Error('timeout of 5000ms exceeded');
+        timeoutError.name = 'AxiosError';
+        mockHttpService.post.mockReturnValue(throwError(() => timeoutError));
 
         await expect(service.registerLocalUser(dto)).rejects.toThrow(ServiceUnavailableException);
         expect(mockUserStorage.createLocalUser).not.toHaveBeenCalled();

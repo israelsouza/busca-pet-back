@@ -16,9 +16,8 @@ import { UsersService } from './users.service';
 import { UserStorage, newUser } from '@storage/contracts/user-storage.contract';
 import { LocalUserDTO } from './schema e dto/user.dto';
 
-jest.mock('argon2', () => ({
+jest.mock('@node-rs/argon2', () => ({
   hash: jest.fn((pass: string) => Promise.resolve(`hashed::${pass}`)),
-  argon2id: 2,
 }));
 
 const makeLocalUserDTO = (overrides: Partial<LocalUserDTO> = {}): LocalUserDTO => ({

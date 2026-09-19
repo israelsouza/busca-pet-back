@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { emailAndNickname, hasError, UserStorage, newUser, CreatedUserResponse } from '../contracts/user-storage.contract';
 
 @Injectable()
 export class PrismaUserStorage implements UserStorage {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PrismaService)
+    private readonly prisma: PrismaService,
+  ) {}
 
   async checkEmailAndNickname(data: emailAndNickname): Promise<null | hasError> {
     const hasUser = await this.prisma.user.findFirst({
