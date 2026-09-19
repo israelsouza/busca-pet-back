@@ -45,6 +45,23 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas na su
    cp .env.example .env
    ```
 
+   Em seguida, obtenha a string de conexão do PostgreSQL local do Supabase e atualize o `.env`:
+
+   ```bash
+   pnpm supabase start
+   pnpm supabase status
+   ```
+
+   Na saída do `supabase status`, localize o campo **`DB URL`** (porta `54322`).
+   Preencha as variáveis no seu `.env` com o valor obtido:
+
+   ```env
+   DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
+   DIRECT_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
+   ```
+
+   > **Nota:** O `DIRECT_DATABASE_URL` é necessário para as migrations do Prisma com Supabase (connection pooler não suporta DDL). Ambas as variáveis devem apontar para a porta `54322` (PostgreSQL direto), **não** a `54321` (API REST do Supabase).
+
 5. **Inicie a infraestrutura local (Supabase & PostgreSQL via Docker):**
 
    ```bash
