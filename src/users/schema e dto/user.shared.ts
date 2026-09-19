@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const personName = z.string().max(75);
+export const personName = z.string().trim().min(1).max(75);
 
 export const email = z.string().email();
 export const password = z.string().min(8);
