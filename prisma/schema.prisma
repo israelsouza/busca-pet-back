@@ -30,7 +30,7 @@ model User {
   person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
 
   email    String  @unique @map("email")
-  nickname String  @map("nickname")
+  nickname String  @unique @map("nickname")
   isBan    Boolean @default(false) @map("is_ban")
   photo    String? @map("photo")
 
