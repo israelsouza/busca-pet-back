@@ -11,6 +11,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "prebuild": "node scripts/prepare-arm64-bindings.js",
     "build": "nest build",
     "deploy:dev": "pnpm build && npx serverless deploy --stage dev",
     "deploy:stg": "pnpm build && npx serverless deploy --stage stg",
@@ -32,9 +33,9 @@
     "@nestjs/core": "11.1.19",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "11.1.19",
+    "@node-rs/argon2": "2.1.0",
     "@prisma/client": "5.22.0",
     "@vendia/serverless-express": "4.12.6",
-    "argon2": "0.44.0",
     "axios": "1.18.1",
     "express": "5.2.1",
     "nestjs-zod": "4.3.1",
@@ -107,5 +108,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "optionalDependencies": {
+    "@node-rs/argon2-linux-arm64-gnu": "2.1.0"
   }
 }
